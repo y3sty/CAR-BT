@@ -1,2 +1,28 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect to CAR BT</title>
+</head>
+<body>
+    <h1>Bluetooth Connection</h1>
+    <button id="connect">Connect to CAR BT</button>
+
+    <script>
+        document.getElementById('connect').addEventListener('click', async () => {
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    filters: [{ name: 'CAR BT' }], // Фильтрация по имени устройства
+                    optionalServices: ['battery_service'] // Замените на соответствующие службы вашего устройства, если необходимо
+                });
+
+                const server = await device.gatt.connect();
+                console.log('Connected to', device.name);
+            } catch (error) {
+                console.error('Connection failed', error);
+            }
+        });
+    </script>
+</body>
+</html>
